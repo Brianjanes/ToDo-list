@@ -1,11 +1,10 @@
 import React from "react";
-import GolbalStyles from "./GolbalStyles";
-import styled from "styled-components";
 import ToDoList from "./Components/ToDoList";
+import "./App.css";
 
 const App = () => {
   return (
-    <div>
+    <div className="todo-app">
       <ToDoList />
     </div>
   );

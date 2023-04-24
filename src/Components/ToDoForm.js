@@ -1,8 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, useRef } from "react";
 
 const ToDoForm = (props) => {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(props.edit ? props.edit.value : "");
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  });
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -19,21 +24,36 @@ const ToDoForm = (props) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormInput
-        type="text"
-        placeholder="Add a thing to do!"
-        value={input}
-        name="text"
-        onChange={(e) => handleChange(e)}
-      ></FormInput>
-      <Button>Add ToDo</Button>
-    </Form>
+    <form onSubmit={handleSubmit} className="todo-form">
+      {props.edit ? (
+        <>
+          <input
+            type="text"
+            placeholder="Add a thing to do!"
+            value={input}
+            name="text"
+            onChange={(e) => handleChange(e)}
+            ref={inputRef}
+            className="todo-input edit"
+          ></input>
+          <button className="todo-button">Edit Task</button>
+        </>
+      ) : (
+        <>
+          <input
+            type="text"
+            placeholder="Add a thing to do!"
+            value={input}
+            name="text"
+            onChange={(e) => handleChange(e)}
+            ref={inputRef}
+            className="todo-input"
+          ></input>
+          <button className="todo-button">Add Task</button>
+        </>
+      )}
+    </form>
   );
 };
-
-const Form = styled.form``;
-const FormInput = styled.input``;
-const Button = styled.button``;
 
 export default ToDoForm;
